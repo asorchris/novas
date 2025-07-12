@@ -361,11 +361,13 @@ footer.watermark a:hover {
 }
 
 /* Very Small Screens */
-@media (max-width: 400px) {
-    .yaps-section,
-    .leaderboard-section {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 420px) {
+  .yaps-section,
+  .leaderboard-section {
+    grid-template-columns: repeat(2, 1fr); /* ⬅ keep 2 cards per row */
+  }
+}
+
 
     .result-card {
         padding: 1rem;
