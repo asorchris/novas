@@ -389,12 +389,12 @@ footer.watermark a:hover {
 
     .generated-card {
         width: 400px;
-        height: 425px;
+        height: 500px;
         padding: 1.5rem;
     }
 
     .generated-card-inner {
-        min-height: 375px;
+        min-height: 425px;
     }
 
     .user-info img {
@@ -445,4 +445,3 @@ footer.watermark a:hover {
         top: 0.3rem;
         right: 0.3rem;
     }
-}
