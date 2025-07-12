@@ -357,62 +357,81 @@ button:hover {
 @media (max-width: 420px) {
     .yaps-section,
     .leaderboard-section {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        /* ⬅ keep 2 cards per row */
     }
-    .result-card {
-        padding: 1rem;
-    }
-    .search-box {
-        gap: 0.5rem;
-    }
-    input[type="text"] {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-    }
-    button {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-    .generated-card {
-        width: 400px;
-        height: 425px;
-        padding: 1.5rem;
-    }
-    .user-info img {
-        width: 50px;
-        height: 50px;
-    }
-    .user-info h2 {
-        font-size: 1rem;
-    }
-    .user-info p {
-        font-size: 0.8rem;
-    }
-    .stats-label {
-        font-size: 0.9rem;
-    }
-    .stat-block {
-        padding: 0.6rem;
-    }
-    .stat-block p {
-        font-size: 0.8rem;
-    }
-    .stat-block span {
-        font-size: 1rem;
-    }
-    .watermark {
-        font-size: 0.65rem;
-        padding: 0.3rem;
-        bottom: 1rem;
-        right: 1rem;
-    }
-    .error-message {
-        font-size: 0.85rem;
-        padding: 0.6rem 0.8rem;
-    }
-    .error-message button {
-        font-size: 0.9rem;
-        top: 0.3rem;
-        right: 0.3rem;
-    }
+}
+
+.result-card {
+    padding: 1rem;
+}
+
+.search-box {
+    gap: 0.5rem;
+}
+
+input[type="text"] {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+}
+
+.generated-card {
+    width: 400px;
+    height: 425px;
+    padding: 1.5rem;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+}
+
+.user-info h2 {
+    font-size: 1rem;
+}
+
+.user-info p {
+    font-size: 0.8rem;
+}
+
+.stats-label {
+    font-size: 0.9rem;
+}
+
+.stat-block {
+    padding: 0.6rem;
+}
+
+.stat-block p {
+    font-size: 0.8rem;
+}
+
+.stat-block span {
+    font-size: 1rem;
+}
+
+.watermark {
+    font-size: 0.65rem;
+    padding: 0.3rem;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.error-message {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+}
+
+.error-message button {
+    font-size: 0.9rem;
+    top: 0.3rem;
+    right: 0.3rem;
+}
+
+
 }
