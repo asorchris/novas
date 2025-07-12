@@ -354,7 +354,7 @@ button:hover {
 
 /* Very Small Screens */
 
-@media (max-width: 400px) {
+@media (max-width: 420px) {
     .yaps-section,
     .leaderboard-section {
         grid-template-columns: 1fr;
