@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novastro Yaps</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Novastro Yaps</h1>
+    </header>
+    <div class="search-box">
+        <input type="text" id="usernameInput" placeholder="Enter X username">
+        <button id="searchBtn">Search</button>
+    </div>
+    <div class="error-message" id="errorMessage" style="display: none;">
+        <span id="errorText"></span>
+        <button id="errorCloseBtn">×</button>
+    </div>
+    <div class="result-card" id="resultCard" style="display: none;">
+        <div class="result-card-inner">
+            <div class="user-info">
+                <img id="userAvatar" src="" alt="User Avatar">
+                <div>
+                    <h2 id="displayName"></h2>
+                    <p id="handle"></p>
+                </div>
+            </div>
+            <div>
+                <div class="stats-label">Yaps</div>
+                <div class="yaps-section">
+                    <div class="stat-block">
+                        <p>Total Yaps</p>
+                        <span id="totalYaps">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>Last 24 hrs</p>
+                        <span id="last24h">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>Last 7 Days</p>
+                        <span id="last7d">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>Last 30 Days</p>
+                        <span id="last30d">-</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="stats-label">Leaderboard Positions</div>
+                <div class="leaderboard-section">
+                    <div class="stat-block">
+                        <p>7D Rank</p>
+                        <span id="rank7d">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>30D Rank</p>
+                        <span id="rank30d">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>3M Rank</p>
+                        <span id="rank3m">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="shareBtn">Share</button>
+                <button id="generateBtn">Generate Card</button>
+            </div>
+        </div>
+    </div>
+    <div class="generated-card" id="generatedCard">
+        <div class="generated-card-inner">
+            <div class="user-info">
+                <img id="generatedAvatar" src="" alt="User Avatar">
+                <div>
+                    <h2 id="generatedDisplayName"></h2>
+                    <p id="generatedHandle"></p>
+                </div>
+            </div>
+            <div>
+                <div class="stats-label">Yaps</div>
+                <div class="yaps-section">
+                    <div class="stat-block">
+                        <p>Total Yaps</p>
+                        <span id="generatedTotalYaps">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>Last 24 hrs</p>
+                        <span id="generatedLast24h">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>Last 7 Days</p>
+                        <span id="generatedLast7d">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>Last 30 Days</p>
+                        <span id="generatedLast30d">-</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="stats-label">Leaderboard Positions</div>
+                <div class="leaderboard-section">
+                    <div class="stat-block">
+                        <p>7D Rank</p>
+                        <span id="generatedRank7d">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>30D Rank</p>
+                        <span id="generatedRank30d">-</span>
+                    </div>
+                    <div class="stat-block">
+                        <p>3M Rank</p>
+                        <span id="generatedRank3m">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="watermark">Made by @xtopher0x</div>
+        </div>
+    </div>
+    <div class="loader" id="loader" style="display: none;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
