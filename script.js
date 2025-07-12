@@ -35,7 +35,7 @@ function preloadImage(url) {
     });
 }
 
-searchBtn.addEventListener("click", async() => {
+searchBtn.addEventListener("click", async () => {
     const username = usernameInput.value.trim();
     if (!username) {
         showError("Please enter a username");
@@ -97,7 +97,7 @@ searchBtn.addEventListener("click", async() => {
         };
 
         const [leaderboard7d, leaderboard30d, leaderboard3m] = await Promise.all(
-            Object.values(urls).map(async(url, i) => {
+            Object.values(urls).map(async (url, i) => {
                 const res = await fetch(proxy + url);
                 if (!res.ok) {
                     throw new Error(
@@ -127,32 +127,18 @@ searchBtn.addEventListener("click", async() => {
         // 5. Update Generated Card
         document.getElementById("generatedDisplayName").textContent = username;
         document.getElementById("generatedHandle").textContent = `@${username}`;
-        document.getElementById("generatedTotalYaps").textContent = yapsData ?
-            yapsData.yaps_all.toFixed(2) :
-            "-";
-        document.getElementById("generatedLast24h").textContent = yapsData ?
-            yapsData.yaps_l24h.toFixed(2) :
-            "-";
-        document.getElementById("generatedLast7d").textContent = yapsData ?
-            yapsData.yaps_l7d.toFixed(2) :
-            "-";
-        document.getElementById("generatedLast30d").textContent = yapsData ?
-            yapsData.yaps_l30d.toFixed(2) :
-            "-";
+        document.getElementById("generatedTotalYaps").textContent = yapsData ? yapsData.yaps_all.toFixed(2) : "-";
+        document.getElementById("generatedLast24h").textContent = yapsData ? yapsData.yaps_l24h.toFixed(2) : "-";
+        document.getElementById("generatedLast7d").textContent = yapsData ? yapsData.yaps_l7d.toFixed(2) : "-";
+        document.getElementById("generatedLast30d").textContent = yapsData ? yapsData.yaps_l30d.toFixed(2) : "-";
         document.getElementById("generatedRank7d").textContent = rank7d;
         document.getElementById("generatedRank30d").textContent = rank30d;
         document.getElementById("generatedRank3m").textContent = rank3m;
 
         // Log for debugging
         console.log("Leaderboard ranks:", { rank7d, rank30d, rank3m });
-        console.log(
-            "Generated leaderboard DOM:",
-            document.querySelector("#generatedCard .leaderboard-section").innerHTML
-        );
-        console.log(
-            "Watermark DOM:",
-            document.querySelector("#generatedCard .watermark").innerHTML
-        );
+        console.log("Generated leaderboard DOM:", document.querySelector("#generatedCard .leaderboard-section").innerHTML);
+        console.log("Watermark DOM:", document.querySelector("#generatedCard .watermark").innerHTML);
 
         // 6. Show Result
         resultCard.style.display = "block";
@@ -179,21 +165,19 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     const rank30d = document.getElementById("rank30d").textContent;
     const rank3m = document.getElementById("rank3m").textContent;
 
-    const text = `Just checked my yaps and my @Novastro_xyz position on this website created by @xtopher0x and I have ${totalYaps} total Yaps \n\n These are my ranks:\n\n #${rank7d} in the last 7 days\n #${rank30d} in the last 30 days\n #${rank3m} in the last 3 months\n\nTry it at https://yourapp.vercel.app`;
+    const text = `I Just checked my Yaps and position on @Novastro_xyz with this website by @xtopher0x and I have ${totalYaps} total Yaps. \n\nHere are my ranks: \n\n#${rank7d} in the last 7 days\n#${rank30d} in the last 30 days\n#${rank3m} in the last 3 months\n\nTry it at https://novastroyaps.vercel.app`;
 
     const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    text
-  )}`;
+        text
+    )}`;
     window.open(tweet, "_blank");
 });
 
 // Generate card logic
-document.getElementById("generateBtn").addEventListener("click", async() => {
+document.getElementById("generateBtn").addEventListener("click", async () => {
     const card = document.getElementById("generatedCard");
     const avatar = document.getElementById("generatedAvatar");
-    const leaderboardSection = document.querySelector(
-        "#generatedCard .leaderboard-section"
-    );
+    const leaderboardSection = document.querySelector("#generatedCard .leaderboard-section");
 
     try {
         loader.style.display = "flex";
@@ -213,12 +197,12 @@ document.getElementById("generateBtn").addEventListener("click", async() => {
         leaderboardSection.offsetHeight;
 
         // Wait to ensure DOM updates
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 300));
 
         await html2canvas(card, {
             scale: 2,
             useCORS: true,
-            backgroundColor: "#0f0f13",
+            backgroundColor: "#0f0f13"
         }).then((canvas) => {
             const link = document.createElement("a");
             link.download = "novastro-yaps-card.png";

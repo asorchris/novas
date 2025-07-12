@@ -1,5 +1,4 @@
 /* Reset */
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,18 +16,14 @@ body {
     min-height: 100vh;
 }
 
-
 /* Header */
-
 header h1 {
     font-size: 1.8rem;
     color: #fff;
     margin-bottom: 1.5rem;
 }
 
-
 /* Search Bar */
-
 .search-box {
     display: flex;
     flex-wrap: nowrap;
@@ -39,8 +34,8 @@ header h1 {
 }
 
 input[type="text"] {
-    padding: 0.7rem 1rem;
-    border-radius: 1.5rem;
+    padding: 1.2rem 2rem;
+    border-radius: .5rem;
     border: none;
     background-color: #1c1c22;
     color: #fff;
@@ -50,10 +45,10 @@ input[type="text"] {
 }
 
 button {
-    padding: 0.7rem 1.2rem;
+    padding: 1.2rem 2.4rem;
     background-color: #8f4fff;
     border: none;
-    border-radius: 1.5rem;
+    border-radius: .5rem;
     color: white;
     font-weight: 500;
     font-size: 0.95rem;
@@ -65,9 +60,7 @@ button:hover {
     background-color: #a96aff;
 }
 
-
 /* Error Message */
-
 .error-message {
     display: none;
     background: rgba(255, 75, 75, 0.1);
@@ -103,9 +96,7 @@ button:hover {
     color: #ff7878;
 }
 
-
 /* Result Card */
-
 .result-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -135,16 +126,14 @@ button:hover {
     gap: 1.2rem;
 }
 
-
 /* Generated Card */
-
 .generated-card {
     background: #0f0f13;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 0;
     padding: 1.5rem;
     width: 600px;
-    height: 575px;
+    height: 600px;
     box-shadow: 0 0 30px rgba(144, 97, 255, 0.1);
     position: absolute;
     left: -9999px;
@@ -156,7 +145,7 @@ button:hover {
     flex-direction: column;
     gap: 1rem;
     height: 100%;
-    min-height: 575px;
+    min-height: 600px;
 }
 
 .watermark {
@@ -170,9 +159,26 @@ button:hover {
     z-index: 10;
 }
 
+footer.watermark {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 0.5rem;
+}
+
+footer.watermark a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer.watermark a:hover {
+    color: #fff;
+}
 
 /* User Info */
-
 .user-info {
     display: flex;
     align-items: center;
@@ -196,9 +202,7 @@ button:hover {
     font-size: 0.85rem;
 }
 
-
 /* Stats Section */
-
 .stats-label {
     font-weight: bold;
     font-size: 1rem;
@@ -246,9 +250,7 @@ button:hover {
     color: #fff;
 }
 
-
 /* Buttons */
-
 .buttons {
     display: flex;
     gap: 0.8rem;
@@ -256,9 +258,7 @@ button:hover {
     justify-content: space-between;
 }
 
-
 /* Loader */
-
 .loader {
     display: none;
     position: fixed;
@@ -283,155 +283,164 @@ button:hover {
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-
 /* Desktop Layout */
-
 @media (min-width: 768px) {
     body {
         padding: 2rem;
     }
+
     header h1 {
         font-size: 2rem;
     }
+
     .search-box {
         flex-wrap: nowrap;
         max-width: 768px;
     }
+
     input[type="text"] {
-        padding: 0.8rem 1.2rem;
+        padding: 1.2rem 2rem;
         font-size: 1rem;
     }
+
     button {
-        padding: 0.8rem 1.4rem;
+        padding: 1.2rem 2.4rem;
         font-size: 1rem;
     }
+
     .result-card {
         max-width: 768px;
     }
+
     .error-message {
         max-width: 768px;
     }
+
     .yaps-section,
     .leaderboard-section {
         grid-template-columns: repeat(3, 1fr);
     }
+
     .user-info img {
         width: 70px;
         height: 70px;
     }
+
     .user-info h2 {
         font-size: 1.2rem;
     }
+
     .user-info p {
         font-size: 0.9rem;
     }
+
     .stats-label {
         font-size: 1.1rem;
         margin-bottom: 0.5rem;
     }
+
     .stat-block {
         padding: 1rem;
     }
+
     .stat-block p {
         font-size: 0.9rem;
     }
+
     .stat-block span {
         font-size: 1.2rem;
     }
+
     .buttons {
         margin-top: 1.5rem;
     }
 }
 
-
 /* Very Small Screens */
-
-@media (max-width: 420px) {
+@media (max-width: 400px) {
     .yaps-section,
     .leaderboard-section {
-        grid-template-columns: repeat(2, 1fr);
-        /* ⬅ keep 2 cards per row */
+        grid-template-columns: 1fr;
     }
-}
 
-.result-card {
-    padding: 1rem;
-}
+    .result-card {
+        padding: 1rem;
+    }
 
-.search-box {
-    gap: 0.5rem;
-}
+    .search-box {
+        gap: 0.5rem;
+    }
 
-input[type="text"] {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.9rem;
-}
+    input[type="text"] {
+        padding: 1.2rem 1.6rem;
+        font-size: 0.9rem;
+    }
 
-button {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-}
+    button {
+        padding: 1.2rem 2rem;
+        font-size: 0.9rem;
+    }
 
-.generated-card {
-    width: 400px;
-    height: 425px;
-    padding: 1.5rem;
-}
+    .generated-card {
+        width: 400px;
+        height: 425px;
+        padding: 1.5rem;
+    }
 
-.user-info img {
-    width: 50px;
-    height: 50px;
-}
+    .generated-card-inner {
+        min-height: 375px;
+    }
 
-.user-info h2 {
-    font-size: 1rem;
-}
+    .user-info img {
+        width: 50px;
+        height: 50px;
+    }
 
-.user-info p {
-    font-size: 0.8rem;
-}
+    .user-info h2 {
+        font-size: 1rem;
+    }
 
-.stats-label {
-    font-size: 0.9rem;
-}
+    .user-info p {
+        font-size: 0.8rem;
+    }
 
-.stat-block {
-    padding: 0.6rem;
-}
+    .stats-label {
+        font-size: 0.9rem;
+    }
 
-.stat-block p {
-    font-size: 0.8rem;
-}
+    .stat-block {
+        padding: 0.6rem;
+    }
 
-.stat-block span {
-    font-size: 1rem;
-}
+    .stat-block p {
+        font-size: 0.8rem;
+    }
 
-.watermark {
-    font-size: 0.65rem;
-    padding: 0.3rem;
-    bottom: 1rem;
-    right: 1rem;
-}
+    .stat-block span {
+        font-size: 1rem;
+    }
 
-.error-message {
-    font-size: 0.85rem;
-    padding: 0.6rem 0.8rem;
-}
+    .watermark {
+        font-size: 0.65rem;
+        padding: 0.3rem;
+    }
 
-.error-message button {
-    font-size: 0.9rem;
-    top: 0.3rem;
-    right: 0.3rem;
-}
+    footer.watermark {
+        bottom: 0.5rem;
+    }
 
+    .error-message {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+    }
 
+    .error-message button {
+        font-size: 0.9rem;
+        top: 0.3rem;
+        right: 0.3rem;
+    }
 }
