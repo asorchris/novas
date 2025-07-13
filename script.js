@@ -8,14 +8,49 @@ const errorText = document.getElementById("errorText");
 const errorCloseBtn = document.getElementById("errorCloseBtn");
 const visitorCount = document.getElementById("visitorCount");
 
-const proxy = "https://corsproxy.io/?"; // CORS bypass
+const proxy = "https://corsproxy.io/?"; // CORS bypass for other APIs
+
+// Fetch with retry
+async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const res = await fetch(url, options);
+            if (res.ok) return res;
+            throw new Error(`Fetch failed: ${res.status}`);
+        } catch (err) {
+            if (i === retries - 1) throw err;
+            console.warn(`Retry ${i + 1}/${retries} for ${url}`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+}
 
 // Visitor counter
-function updateVisitorCount() {
-    let count = parseInt(localStorage.getItem("visitorCount") || "0");
-    count++;
-    localStorage.setItem("visitorCount", count);
-    visitorCount.textContent = count;
+async function updateVisitorCount() {
+    try {
+        // Increment counter
+        const postRes = await fetchWithRetry("https://novas-backend.onrender.com/counter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ incrementBy: 1 })
+        });
+        if (!postRes.ok) {
+            throw new Error(`Failed to increment counter: ${postRes.status}`);
+        }
+
+        // Fetch current counter
+        const getRes = await fetchWithRetry("https://novas-backend.onrender.com/counter");
+        if (!getRes.ok) {
+            throw new Error(`Failed to fetch counter: ${getRes.status}`);
+        }
+        const data = await getRes.json();
+        visitorCount.textContent = data.count || "-";
+    } catch (err) {
+        console.error("Visitor counter error:", err);
+        visitorCount.textContent = "-";
+        // Optional: Show user-facing error
+        // showError("Failed to load visitor counter. Please try again later.");
+    }
 }
 
 updateVisitorCount();
@@ -176,7 +211,7 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     const rank30d = document.getElementById("rank30d").textContent;
     const rank3m = document.getElementById("rank3m").textContent;
 
-    const text = `I Just checked my Yaps and position on @Novastro_xyz with this website by @xtopher0x and I have ${totalYaps} total Yaps. \n\nHere are my ranks: \n\n#${rank7d} in the last 7 days\n#${rank30d} in the last 30 days\n #${rank3m} in the last 3 months\n\nTry it at https://novastroyaps.vercel.app`;
+    const text = `I Just checked my Yaps and position on @Novastro_xyz with this website by @xtopher0x and I have ${totalYaps} total Yaps. \n\nHere are my ranks: \n\n#${rank7d} in the last 7 days\n#${rank30d} in the last 30 days\n#${rank3m} in the last 3 months\n\nTry it at https://novastroyaps.vercel.app`;
 
     const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         text
