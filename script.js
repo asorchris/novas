@@ -165,7 +165,7 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     const rank30d = document.getElementById("rank30d").textContent;
     const rank3m = document.getElementById("rank3m").textContent;
 
-    const text = `I Just checked my Yaps and position on @Novastro_xyz with this website by @xtopher0x and I have ${totalYaps} total Yaps. \n\nHere are my ranks: \n\n#${rank7d} in the last 7 days\n#${rank30d} in the last 30 days\n#${rank3m} in the last 3 months\n\nTry it at https://novastroyaps.vercel.app`;
+    const text = `I Just checked my Yaps and position on @Novastro_xyz with this website by @xtopher0x and I have ${totalYaps} total Yaps. \n\nHere are my ranks: \n\n#${rank7d} in the last 7 days\n#${rank30d} in the last 30 days\n #${rank3m} in the last 3 months\n\nTry it at https://novastroyaps.vercel.app`;
 
     const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         text
