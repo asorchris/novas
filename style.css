@@ -477,4 +477,18 @@ footer.watermark a:hover {
         top: 0.3rem;
         right: 0.3rem;
     }
+/* Visitor Counter */
+.visitor-counter {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.visitor-counter p {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.8rem;
+    padding: 0.5rem 1rem;
 }

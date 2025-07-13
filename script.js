@@ -6,8 +6,19 @@ const loader = document.getElementById("loader");
 const errorMessage = document.getElementById("errorMessage");
 const errorText = document.getElementById("errorText");
 const errorCloseBtn = document.getElementById("errorCloseBtn");
+const visitorCount = document.getElementById("visitorCount");
 
 const proxy = "https://corsproxy.io/?"; // CORS bypass
+
+// Visitor counter
+function updateVisitorCount() {
+    let count = parseInt(localStorage.getItem("visitorCount") || "0");
+    count++;
+    localStorage.setItem("visitorCount", count);
+    visitorCount.textContent = count;
+}
+
+updateVisitorCount();
 
 // Show error message
 function showError(message) {
