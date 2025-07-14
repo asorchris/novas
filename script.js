@@ -317,8 +317,8 @@ class UIController {
         Utils.getElement('generatedRank7d').textContent = ranks['7d'];
         Utils.getElement('generatedRank30d').textContent = ranks['30d'];
         Utils.getElement('generatedRank3m').textContent = ranks['3m'];
-        Utils.getElement('generatedRank6m').textContent = ranks['6m'];
-        Utils.getElement('generatedRank12m').textContent = ranks['12m'];
+        // Utils.getElement('generatedRank6m').textContent = ranks['6m'];
+        // Utils.getElement('generatedRank12m').textContent = ranks['12m'];
     }
 
     static showResultCard() {
