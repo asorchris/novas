@@ -33,25 +33,15 @@
 
     <!-- Project Selection -->
     <div class="mb-4 w-full max-w-md md:max-w-3xl">
-        <label for="projectSelect" class="block text-sm font-medium text-text-muted mb-2">Select Project:</label>
-        <select id="projectSelect"
-            class="w-full p-3 bg-bg-secondary rounded-lg border border-border-primary text-white focus:outline-none focus:ring-2 focus:ring-primary">
-            <option value="novas">Novastro</option>
-            <option value="bitcoin">Bitcoin</option>
-            <option value="ethereum">Ethereum</option>
-            <option value="solana">Solana</option>
-            <option value="base">Base</option>
-            <option value="polygon">Polygon</option>
-            <option value="arbitrum">Arbitrum</option>
-            <option value="optimism">Optimism</option>
-            <option value="cardano">Cardano</option>
-            <option value="chainlink">Chainlink</option>
-            <option value="avalanche">Avalanche</option>
-            <option value="polkadot">Polkadot</option>
-            <option value="cosmos">Cosmos</option>
-            <option value="near">NEAR Protocol</option>
-            <option value="algorand">Algorand</option>
-        </select>
+        <label for="projectSearch" class="block text-sm font-medium text-text-muted mb-2">Select Project:</label>
+        <div class="relative">
+            <input type="text" id="projectSearch" placeholder="Search projects..." 
+                   class="w-full p-3 bg-bg-secondary rounded-lg border border-border-primary text-white placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary">
+            <div id="projectDropdown" class="absolute z-50 w-full bg-bg-secondary border border-border-primary rounded-lg mt-1 max-h-60 overflow-y-auto hidden">
+                <!-- Project options will be populated by JavaScript -->
+            </div>
+        </div>
+        <input type="hidden" id="selectedProject" value="novas">
     </div>
 
     <div class="flex flex-col sm:flex-row gap-3 mb-4 w-full max-w-md md:max-w-3xl">
@@ -109,7 +99,7 @@
             </div>
 
             <div>
-                <div class="font-bold text-lg mb-3">Leaderboard Positions</div>
+                <div id="leaderboardTitle" class="font-bold text-lg mb-3">Novastro Positions</div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
                         <p class="text-sm text-text-muted mb-1">7D Rank</p>
@@ -183,7 +173,7 @@
             </div>
 
             <div>
-                <div class="font-bold text-lg mb-3">Leaderboard Positions</div>
+                <div id="generatedLeaderboardTitle" class="font-bold text-lg mb-3">Novastro Positions</div>
                 <div class="grid grid-cols-1 gap-3">
                     <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
                         <p class="text-sm text-text-muted mb-1">7D Rank</p>
@@ -219,7 +209,7 @@
         <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
     </div>
 
-    <footer class="bottom-4 left-1/2 transform -translate-x-1/2 text-center p-2">
+    <footer class=" transform  text-end text-xs p-2">
         <a href="https://x.com/xtopher0x" target="_blank"
             class="text-text-muted hover:text-white transition-colors text-sm">
             Made with love by @Xtopher0x

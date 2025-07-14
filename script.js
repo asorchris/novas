@@ -53,14 +53,26 @@ const PROJECTS = {
     turtleclub: { id: "TURTLECLUB", name: "Turtleclub", color: "#626c8d" },
     union: { id: "UNION", name: "Union", color: "#aef12e" },
     warp: { id: "WARP", name: "Warden Protocol", color: "#67588c" },
-    yeet: { id: "YEET", name: "Yeet", color: "#c5a232" }
+    yeet: { id: "YEET", name: "Yeet", color: "#c5a232" },
+    kaito: { id: "KAITO", name: "Kaito", color: "#2a2aff" },
+    kaia: { id: "KAIA", name: "Kaia", color: "#0ac0a0" },
+    orderlynetwork: { id: "ORDERLYNETWORK", name: "Orderly", color: "#6a4fff" },
+    sei: { id: "SEI", name: "Sei", color: "#ff4f4f" },
+    sophon: { id: "SOPHON", name: "Sophon", color: "#00aaff" },
+    uxlink: { id: "UXLINK", name: "Uxlink", color: "#ea44a6" },
+    arb: { id: "ARB", name: "Arbitrum", color: "#3a6df0" },
+    pyth: { id: "PYTH", name: "Pyth", color: "#d100ff" },
+    dydx: { id: "DYDX", name: "dYdX", color: "#2c2c2e" },
+    virtualecosystem: { id: "VIRTUALECOSYSTEM", name: "Virtuals Protocol", color: "#ff9900" },
 };
 
 // DOM elements cache
 const DOM = {
     searchBtn: null,
     usernameInput: null,
-    projectSelect: null,
+    projectSearch: null,
+    projectDropdown: null,
+    selectedProject: null,
     resultCard: null,
     generatedCard: null,
     loader: null,
@@ -68,6 +80,8 @@ const DOM = {
     errorText: null,
     errorCloseBtn: null,
     visitorCount: null,
+    leaderboardTitle: null,
+    generatedLeaderboardTitle: null,
     elements: {} // Cache for dynamically accessed elements
 };
 
@@ -343,6 +357,14 @@ class UIController {
         // Update title to reflect current project
         document.title = `${projectConfig.name} Yaps`;
         document.querySelector('h1').textContent = `${projectConfig.name} Yaps`;
+        
+        // Update leaderboard titles
+        if (DOM.leaderboardTitle) {
+            DOM.leaderboardTitle.textContent = `${projectConfig.name} Positions`;
+        }
+        if (DOM.generatedLeaderboardTitle) {
+            DOM.generatedLeaderboardTitle.textContent = `${projectConfig.name} Positions`;
+        }
     }
 }
 
@@ -429,13 +451,100 @@ class CardGenerator {
     }
 }
 
+// Searchable Dropdown functionality
+class SearchableDropdown {
+    static init() {
+        this.populateDropdown();
+        this.setupEventListeners();
+        this.setDefaultProject();
+    }
+
+    static populateDropdown() {
+        const dropdown = DOM.projectDropdown;
+        dropdown.innerHTML = '';
+
+        Object.entries(PROJECTS).forEach(([key, project]) => {
+            const option = document.createElement('div');
+            option.className = 'p-3 hover:bg-glass cursor-pointer border-b border-border-primary last:border-b-0 transition-colors duration-200';
+            option.textContent = project.name;
+            option.dataset.value = key;
+            option.addEventListener('click', () => this.selectProject(key, project.name));
+            dropdown.appendChild(option);
+        });
+    }
+
+    static setupEventListeners() {
+        // Search input
+        DOM.projectSearch.addEventListener('input', (e) => {
+            this.filterProjects(e.target.value);
+        });
+
+        // Show/hide dropdown
+        DOM.projectSearch.addEventListener('focus', () => {
+            DOM.projectDropdown.classList.remove('hidden');
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!DOM.projectSearch.contains(e.target) && !DOM.projectDropdown.contains(e.target)) {
+                DOM.projectDropdown.classList.add('hidden');
+            }
+        });
+
+        // Handle keyboard navigation
+        DOM.projectSearch.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                DOM.projectDropdown.classList.add('hidden');
+            }
+        });
+    }
+
+    static filterProjects(searchTerm) {
+        const options = DOM.projectDropdown.querySelectorAll('div');
+        const term = searchTerm.toLowerCase();
+
+        options.forEach(option => {
+            const projectName = option.textContent.toLowerCase();
+            if (projectName.includes(term)) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+
+        // Show dropdown if there's a search term
+        if (searchTerm.trim()) {
+            DOM.projectDropdown.classList.remove('hidden');
+        }
+    }
+
+    static selectProject(key, name) {
+        DOM.projectSearch.value = name;
+        DOM.selectedProject.value = key;
+        DOM.projectDropdown.classList.add('hidden');
+        
+        // Update the current project
+        STATE.currentProject = key;
+        UIController.updateProjectTheme(key);
+    }
+
+    static setDefaultProject() {
+        const defaultProject = PROJECTS.novas;
+        DOM.projectSearch.value = defaultProject.name;
+        DOM.selectedProject.value = 'novas';
+        STATE.currentProject = 'novas';
+    }
+}
+
 // Main application controller
 class AppController {
     static async init() {
         // Cache DOM elements
         DOM.searchBtn = document.getElementById('searchBtn');
         DOM.usernameInput = document.getElementById('usernameInput');
-        DOM.projectSelect = document.getElementById('projectSelect');
+        DOM.projectSearch = document.getElementById('projectSearch');
+        DOM.projectDropdown = document.getElementById('projectDropdown');
+        DOM.selectedProject = document.getElementById('selectedProject');
         DOM.resultCard = document.getElementById('resultCard');
         DOM.generatedCard = document.getElementById('generatedCard');
         DOM.loader = document.getElementById('loader');
@@ -443,13 +552,17 @@ class AppController {
         DOM.errorText = document.getElementById('errorText');
         DOM.errorCloseBtn = document.getElementById('errorCloseBtn');
         DOM.visitorCount = document.getElementById('visitorCount');
+        DOM.leaderboardTitle = document.getElementById('leaderboardTitle');
+        DOM.generatedLeaderboardTitle = document.getElementById('generatedLeaderboardTitle');
+
+        // Initialize searchable dropdown
+        SearchableDropdown.init();
 
         // Set up event listeners
         this.setupEventListeners();
 
         // Initialize visitor counter
         this.initVisitorCounter();
-        this.populateProjectOptions();
 
         // Set initial project theme
         UIController.updateProjectTheme(STATE.currentProject);
@@ -460,12 +573,6 @@ class AppController {
         DOM.searchBtn.addEventListener('click', () => this.handleSearch());
         DOM.usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleSearch();
-        });
-
-        // Project selection
-        DOM.projectSelect.addEventListener('change', (e) => {
-            STATE.currentProject = e.target.value;
-            UIController.updateProjectTheme(STATE.currentProject);
         });
 
         // Error handling
@@ -496,18 +603,6 @@ class AppController {
         );
     }
 
-    static async populateProjectOptions() {
-        const select = document.getElementById("projectSelect");
-        select.innerHTML = ""; // Clear existing options if any
-
-        Object.entries(PROJECTS).forEach(([key, project]) => {
-            const option = document.createElement("option");
-            option.value = key;
-            option.textContent = project.name;
-            select.appendChild(option);
-        });
-    }
-
     static async initVisitorCounter() {
         try {
             UIController.updateVisitorCount(0);
@@ -520,6 +615,7 @@ class AppController {
 
     static async handleSearch() {
         const username = Utils.sanitizeUsername(DOM.usernameInput.value);
+        const currentProject = DOM.selectedProject.value;
 
         if (!username) {
             UIController.showError("Please enter a username");
@@ -533,11 +629,12 @@ class AppController {
             UIController.hideError();
 
             STATE.currentUsername = username;
+            STATE.currentProject = currentProject;
 
             // Fetch user data and leaderboard data in parallel
             const [yapsData, leaderboardData, avatarUrl] = await Promise.all([
                 APIService.fetchUserYaps(username),
-                APIService.fetchLeaderboardData(STATE.currentProject),
+                APIService.fetchLeaderboardData(currentProject),
                 APIService.getUserAvatar(username)
             ]);
 
@@ -570,6 +667,7 @@ class AppController {
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     AppController.init();
+    SearchableDropdown.init();
 });
 
 // Add CSS animations via JavaScript (since we removed the CSS file)
