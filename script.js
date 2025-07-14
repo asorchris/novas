@@ -281,9 +281,9 @@ class UIController {
             }
             const value = yapsData ? Utils.formatNumber(yapsData[key]) : '-';
             const el = Utils.getElement(elementId);
-            if (el) el?.textContent = value;
+            if (el) el.textContent = value;
             const genEl = Utils.getElement(generatedElements[index]);
-            if (genEl) genEl?.textContent = value;
+            if (genEl) genEl.textContent = value;
         });
     }
 
