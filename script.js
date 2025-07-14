@@ -177,6 +177,8 @@ class APIService {
 
             const data = await Promise.all(responses.map(res => res.json()));
 
+            console.log("Fetched leaderboard data:", data);
+
             return durations.reduce((acc, duration, index) => {
                 acc[duration] = data[index];
                 return acc;
