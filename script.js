@@ -11,15 +11,49 @@ const CONFIG = {
 // Project configurations with their respective topic IDs
 const PROJECTS = {
     novas: { id: "NYT", name: "Novastro", color: "#8f4fff" },
-    bitcoin: { id: "BTC", name: "Bitcoin", color: "#f7931a" },
-    ethereum: { id: "ETH", name: "Ethereum", color: "#627eea" },
-    solana: { id: "SOL", name: "Solana", color: "#9945ff" },
-    base: { id: "BASE", name: "Base", color: "#0052ff" },
-    polygon: { id: "MATIC", name: "Polygon", color: "#8247e5" },
-    arbitrum: { id: "ARB", name: "Arbitrum", color: "#28a0f0" },
-    optimism: { id: "OP", name: "Optimism", color: "#ff0420" },
-    cardano: { id: "ADA", name: "Cardano", color: "#0033ad" },
-    chainlink: { id: "LINK", name: "Chainlink", color: "#375bd2" }
+    og: { id: "0G", name: "0g", color: "#7e7f01" },
+    allora: { id: "ALLORA", name: "Allora", color: "#f82af6" },
+    anoma: { id: "ANOMA", name: "Anoma", color: "#464287" },
+    bls: { id: "BLS", name: "Bless", color: "#428703" },
+    boundless: { id: "BOUNDLESS", name: "Boundless", color: "#aeeceb" },
+    caldera: { id: "CALDERA", name: "Caldera", color: "#a31dbc" },
+    camp: { id: "CAMP", name: "Camp", color: "#a32c01" },
+    cysic: { id: "CYSIC", name: "Cysic", color: "#d03c62" },
+    eclipse: { id: "ECLIPSE", name: "Eclipse", color: "#32f722" },
+    fogo: { id: "FOGO", name: "Fogo", color: "#4d44f6" },
+    hanahana: { id: "HANAHANA", name: "Hana", color: "#fc45e3" },
+    goatnetwork: { id: "GOATNETWORK", name: "Goat Network", color: "#ffc1fe" },
+    infinex: { id: "INFINEX", name: "Infinex", color: "#1de933" },
+    infinit: { id: "INFINIT", name: "Infinit", color: "#79490a" },
+    irys: { id: "IRYS", name: "Irys", color: "#663e2f" },
+    kat: { id: "KAT", name: "Katana", color: "#a54248" },
+    lombard: { id: "LOMBARD", name: "Lombard", color: "#3fbe78" },
+    lumiterra: { id: "LUMITERRA", name: "Lumiterra", color: "#4ef8f5" },
+    megaeth: { id: "MEGAETH", name: "Megaeth", color: "#8978d8" },
+    memex: { id: "MEMEX", name: "Memex", color: "#03bd63" },
+    mira: { id: "MIRA", name: "Mira Network", color: "#d01e80" },
+    mitosis: { id: "MITOSIS", name: "Mitosis", color: "#8ee3eb" },
+    monad: { id: "MONAD", name: "Monad", color: "#788a54" },
+    multibank: { id: "MULTIBANK", name: "Multibank", color: "#529114" },
+    multipli: { id: "MULTIPLI", name: "Multipli", color: "#44c592" },
+    noya: { id: "NOYA", name: "Noya", color: "#962624" },
+    openledger: { id: "OPENLEDGER", name: "Openledger", color: "#a28af2" },
+    paradex: { id: "PARADEX", name: "Paradex", color: "#2c05c0" },
+    portalportal: { id: "PORTALPORTAL", name: "Portal to BTC", color: "#26e417" },
+    puffpaw: { id: "PUFFPAW", name: "Puffpaw", color: "#de6eee" },
+    satlayer: { id: "SATLAYER", name: "Satlayer", color: "#4e101b" },
+    sidekick: { id: "SIDEKICK", name: "Sidekick", color: "#121192" },
+    somnia: { id: "SOMNIA", name: "Somnia", color: "#d5fc30" },
+    so: { id: "SO", name: "Soul Protocol", color: "#c981f3" },
+    succinct: { id: "SUCCINCT", name: "Succinct", color: "#2f36f8" },
+    surf: { id: "SURF", name: "Surf", color: "#f11654" },
+    symphony: { id: "SYMPHONY", name: "Symphony", color: "#f842c0" },
+    theoriq: { id: "THEORIQ", name: "Theoriq", color: "#35888c" },
+    thrive: { id: "THRIVE", name: "Thrive", color: "#65191a" },
+    turtleclub: { id: "TURTLECLUB", name: "Turtleclub", color: "#626c8d" },
+    union: { id: "UNION", name: "Union", color: "#aef12e" },
+    warp: { id: "WARP", name: "Warden Protocol", color: "#67588c" },
+    yeet: { id: "YEET", name: "Yeet", color: "#c5a232" }
 };
 
 // DOM elements cache
@@ -109,15 +143,15 @@ class Utils {
 class APIService {
     static async fetchUserYaps(username) {
         const url = `${CONFIG.PROXY_URL}https://api.kaito.ai/api/v1/yaps?username=${username}`;
-        
+
         try {
             const response = await Utils.fetchWithRetry(url);
-            
+
             if (response.status === 204) {
                 console.warn("User has no Yaps data (204 No Content)");
                 return null;
             }
-            
+
             const data = await response.json();
             return data && Object.keys(data).length > 0 ? data : null;
         } catch (error) {
@@ -131,8 +165,8 @@ class APIService {
     static async fetchLeaderboardData(project, durations = ['7d', '30d', '3m', '6m', '12m']) {
         const topicId = PROJECTS[project]?.id || PROJECTS.novas.id;
         const baseUrl = "https://hub.kaito.ai/api/v1/gateway/ai/kol/mindshare/top-leaderboard";
-        
-        const urls = durations.map(duration => 
+
+        const urls = durations.map(duration =>
             `${baseUrl}?duration=${duration}&topic_id=${topicId}&top_n=100&customized_community=customized&community_yaps=false`
         );
 
@@ -140,9 +174,9 @@ class APIService {
             const responses = await Promise.all(
                 urls.map(url => Utils.fetchWithRetry(CONFIG.PROXY_URL + url))
             );
-            
+
             const data = await Promise.all(responses.map(res => res.json()));
-            
+
             return durations.reduce((acc, duration, index) => {
                 acc[duration] = data[index];
                 return acc;
@@ -163,7 +197,7 @@ class APIService {
             // Fetch current count
             const response = await Utils.fetchWithRetry(`${CONFIG.BACKEND_URL}/counter`);
             const data = await response.json();
-            
+
             return data.value || 0;
         } catch (error) {
             console.error("Visitor counter error:", error);
@@ -173,7 +207,7 @@ class APIService {
 
     static async getUserAvatar(username) {
         const avatarUrl = `${CONFIG.PROXY_URL}https://unavatar.io/twitter/${username}`;
-        
+
         try {
             await Utils.preloadImage(avatarUrl);
             return avatarUrl;
@@ -190,7 +224,7 @@ class UIController {
         DOM.errorText.textContent = message;
         DOM.errorMessage.classList.remove('hidden');
         DOM.errorMessage.classList.add('animate-fade-in');
-        
+
         setTimeout(() => {
             DOM.errorMessage.classList.add('hidden');
             DOM.errorMessage.classList.remove('animate-fade-in');
@@ -217,12 +251,12 @@ class UIController {
     static updateUserInfo(username, avatarUrl) {
         const displayName = username.charAt(0).toUpperCase() + username.slice(1);
         const handle = `@${username}`;
-        
+
         // Update main result card
         Utils.getElement('displayName').textContent = displayName;
         Utils.getElement('handle').textContent = handle;
         Utils.getElement('userAvatar').src = avatarUrl;
-        
+
         // Update generated card
         Utils.getElement('generatedDisplayName').textContent = displayName;
         Utils.getElement('generatedHandle').textContent = handle;
@@ -232,7 +266,7 @@ class UIController {
     static updateYapsData(yapsData) {
         const elements = ['totalYaps', 'last24h', 'last7d', 'last30d'];
         const generatedElements = ['generatedTotalYaps', 'generatedLast24h', 'generatedLast7d', 'generatedLast30d'];
-        
+
         elements.forEach((elementId, index) => {
             const value = yapsData ? Utils.formatNumber(yapsData[`yaps_${elementId.replace('totalYaps', 'all').replace(/last(\d+)([hd])/, 'l$1$2')}`]) : '-';
             Utils.getElement(elementId).textContent = value;
@@ -243,7 +277,7 @@ class UIController {
     static updateLeaderboardData(leaderboardData, username) {
         const findUserRank = (data) => {
             if (!data || !Array.isArray(data)) return '-';
-            const userIndex = data.findIndex(item => 
+            const userIndex = data.findIndex(item =>
                 item.username.toLowerCase() === username.toLowerCase()
             );
             return userIndex !== -1 ? userIndex + 1 : '-';
@@ -286,7 +320,7 @@ class UIController {
 
         // Update CSS custom properties for theme
         document.documentElement.style.setProperty('--primary', projectConfig.color);
-        
+
         // Update title to reflect current project
         document.title = `${projectConfig.name} Yaps`;
         document.querySelector('h1').textContent = `${projectConfig.name} Yaps`;
@@ -298,7 +332,7 @@ class ShareController {
     static generateShareText(userData) {
         const { username, yapsData, leaderboardData } = userData;
         const projectName = PROJECTS[STATE.currentProject].name;
-        
+
         const totalYaps = yapsData ? Utils.formatNumber(yapsData.yaps_all) : '-';
         const rank7d = Utils.getElement('rank7d').textContent;
         const rank30d = Utils.getElement('rank30d').textContent;
@@ -330,10 +364,10 @@ class CardGenerator {
     static async generateCard() {
         const card = DOM.generatedCard;
         const avatar = Utils.getElement('generatedAvatar');
-        
+
         try {
             UIController.showLoader();
-            
+
             // Preload avatar image
             await Utils.preloadImage(avatar.src).catch(() => {
                 console.warn("Avatar preload failed, using fallback");
@@ -344,10 +378,10 @@ class CardGenerator {
             card.style.visibility = 'visible';
             card.style.position = 'absolute';
             card.style.left = '-9999px';
-            
+
             // Force reflow
             card.offsetHeight;
-            
+
             // Wait for rendering
             await new Promise(resolve => setTimeout(resolve, CONFIG.CANVAS_GENERATION_DELAY));
 
@@ -393,10 +427,11 @@ class AppController {
 
         // Set up event listeners
         this.setupEventListeners();
-        
+
         // Initialize visitor counter
         this.initVisitorCounter();
-        
+        this.populateProjectOptions();
+
         // Set initial project theme
         UIController.updateProjectTheme(STATE.currentProject);
     }
@@ -433,13 +468,25 @@ class AppController {
         });
 
         // Debounced search on input
-        DOM.usernameInput.addEventListener('input', 
+        DOM.usernameInput.addEventListener('input',
             Utils.debounce(() => {
                 if (DOM.usernameInput.value.trim().length > 2) {
                     this.handleSearch();
                 }
             }, 1000)
         );
+    }
+
+    static async populateProjectOptions() {
+        const select = document.getElementById("projectSelect");
+        select.innerHTML = ""; // Clear existing options if any
+
+        Object.entries(PROJECTS).forEach(([key, project]) => {
+            const option = document.createElement("option");
+            option.value = key;
+            option.textContent = project.name;
+            select.appendChild(option);
+        });
     }
 
     static async initVisitorCounter() {
@@ -454,7 +501,7 @@ class AppController {
 
     static async handleSearch() {
         const username = Utils.sanitizeUsername(DOM.usernameInput.value);
-        
+
         if (!username) {
             UIController.showError("Please enter a username");
             return;
@@ -465,7 +512,7 @@ class AppController {
         try {
             UIController.showLoader();
             UIController.hideError();
-            
+
             STATE.currentUsername = username;
 
             // Fetch user data and leaderboard data in parallel
@@ -487,7 +534,7 @@ class AppController {
 
         } catch (error) {
             console.error("Search error:", error);
-            
+
             if (error.message.includes('Username not found')) {
                 UIController.showError("Username not found. Please check and try again.");
             } else if (error.message.includes('leaderboard')) {
