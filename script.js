@@ -264,11 +264,21 @@ class UIController {
     }
 
     static updateYapsData(yapsData) {
-        const elements = ['totalYaps', 'last24h', 'last7d', 'last30d'];
-        const generatedElements = ['generatedTotalYaps', 'generatedLast24h', 'generatedLast7d', 'generatedLast30d'];
+        const elements = ['totalYaps', 'last24h', 'last7d', 'last30d', 'last6m', 'last12m'];
+        const generatedElements = ['generatedTotalYaps', 'generatedLast24h', 'generatedLast7d', 'generatedLast30d', 'generatedLast6m', 'generatedLast12m'];
 
         elements.forEach((elementId, index) => {
-            const value = yapsData ? Utils.formatNumber(yapsData[`yaps_${elementId.replace('totalYaps', 'all').replace(/last(\d+)([hd])/, 'l$1$2')}`]) : '-';
+            // Map elementId to yapsData key
+            let key;
+            if (elementId === 'totalYaps') {
+                key = 'yaps_all';
+            } else if (elementId.startsWith('last')) {
+                // e.g. last24h -> yaps_l24h, last7d -> yaps_l7d, etc.
+                key = 'yaps_l' + elementId.slice(4);
+            } else {
+                key = elementId;
+            }
+            const value = yapsData ? Utils.formatNumber(yapsData[key]) : '-';
             Utils.getElement(elementId).textContent = value;
             Utils.getElement(generatedElements[index]).textContent = value;
         });
@@ -286,7 +296,9 @@ class UIController {
         const ranks = {
             '7d': findUserRank(leaderboardData['7d']),
             '30d': findUserRank(leaderboardData['30d']),
-            '3m': findUserRank(leaderboardData['3m'])
+            '3m': findUserRank(leaderboardData['3m']),
+            '6m': findUserRank(leaderboardData['6m']),
+            '12m': findUserRank(leaderboardData['12m'])
         };
 
         // Update main result card
