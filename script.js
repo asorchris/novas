@@ -310,8 +310,8 @@ class UIController {
         Utils.getElement('rank7d').textContent = ranks['7d'];
         Utils.getElement('rank30d').textContent = ranks['30d'];
         Utils.getElement('rank3m').textContent = ranks['3m'];
-        Utils.getElement('rank6m').textContent = ranks['6m'];
-        Utils.getElement('rank12m').textContent = ranks['12m'];
+        Utils.getElement('rank6m').textContent = ranks?.['6m'] || '-';
+        Utils.getElement('rank12m').textContent = ranks?.['12m'] || '-';
 
         // Update generated card
         Utils.getElement('generatedRank7d').textContent = ranks['7d'];
