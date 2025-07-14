@@ -6,7 +6,10 @@
   "scripts": {
     "start": "npx serve .",
     "dev": "npx live-server .",
-    "build": "echo 'No build process needed for this static site'",
+    "build": "npm run build:prepare && npm run build:copy",
+    "build:prepare": "mkdir -p dist",
+    "build:copy": "cp -r *.html *.js *.md img public/",
+    "build:serve": "npx serve dist",
     "test": "echo 'No tests configured'"
   },
   "keywords": ["yaps", "leaderboard", "crypto", "social", "novastro"],
