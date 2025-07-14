@@ -46,6 +46,7 @@ const STATE = {
     isLoading: false
 };
 
+
 // Utility functions
 class Utils {
     static async fetchWithRetry(url, options = {}, retries = CONFIG.RETRY_ATTEMPTS, delay = CONFIG.RETRY_DELAY) {
