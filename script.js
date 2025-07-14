@@ -128,7 +128,7 @@ class APIService {
         }
     }
 
-    static async fetchLeaderboardData(project, durations = ['7d', '30d', '3m']) {
+    static async fetchLeaderboardData(project, durations = ['7d', '30d', '3m', '6m', '12m']) {
         const topicId = PROJECTS[project]?.id || PROJECTS.novas.id;
         const baseUrl = "https://hub.kaito.ai/api/v1/gateway/ai/kol/mindshare/top-leaderboard";
         
@@ -259,11 +259,15 @@ class UIController {
         Utils.getElement('rank7d').textContent = ranks['7d'];
         Utils.getElement('rank30d').textContent = ranks['30d'];
         Utils.getElement('rank3m').textContent = ranks['3m'];
-        
+        Utils.getElement('rank6m').textContent = ranks['6m'];
+        Utils.getElement('rank12m').textContent = ranks['12m'];
+
         // Update generated card
         Utils.getElement('generatedRank7d').textContent = ranks['7d'];
         Utils.getElement('generatedRank30d').textContent = ranks['30d'];
         Utils.getElement('generatedRank3m').textContent = ranks['3m'];
+        Utils.getElement('generatedRank6m').textContent = ranks['6m'];
+        Utils.getElement('generatedRank12m').textContent = ranks['12m'];
     }
 
     static showResultCard() {
@@ -299,6 +303,8 @@ class ShareController {
         const rank7d = Utils.getElement('rank7d').textContent;
         const rank30d = Utils.getElement('rank30d').textContent;
         const rank3m = Utils.getElement('rank3m').textContent;
+        const rank6m = Utils.getElement('rank6m').textContent;
+        const rank12m = Utils.getElement('rank12m').textContent;
 
         return `I just checked my Yaps and position on @${projectName.toLowerCase()}_xyz with this website by @xtopher0x and I have ${totalYaps} total Yaps.
 
@@ -307,6 +313,8 @@ Here are my ranks:
 #${rank7d} in the last 7 days
 #${rank30d} in the last 30 days
 #${rank3m} in the last 3 months
+#${rank6m} in the last 6 months
+#${rank12m} in the last 12 months
 
 Try it at https://novastroyaps.vercel.app`;
     }
