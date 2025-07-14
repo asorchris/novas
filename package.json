@@ -1,5 +1,22 @@
 {
+  "name": "novastro-yaps",
+  "version": "1.0.0",
+  "description": "A scalable web application to check user yaps and leaderboard positions across multiple projects",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server .",
+    "build": "echo 'No build process needed for this static site'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": ["yaps", "leaderboard", "crypto", "social", "novastro"],
+  "author": "@xtopher0x",
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.10.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
   }
 }

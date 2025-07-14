@@ -4,131 +4,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novastro Yaps</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Yaps Metrics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#8f4fff',
+                        'primary-hover': '#a96aff',
+                        'bg-primary': '#0f0f13',
+                        'bg-secondary': '#1c1c22',
+                        'text-muted': '#aaa',
+                        'border-primary': 'rgba(255, 255, 255, 0.06)',
+                        'glass': 'rgba(255, 255, 255, 0.03)',
+                        'glass-border': 'rgba(255, 255, 255, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <header>
-        <h1>Novastro Yaps</h1>
+<body class="bg-bg-primary text-white font-sans min-h-screen flex flex-col items-center p-4">
+    <header class="mb-6">
+        <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Yaps Metrics</h1>
     </header>
-    <div class="search-box">
-        <input type="text" id="usernameInput" placeholder="Enter X username">
-        <button id="searchBtn">Search</button>
+    
+    <!-- Project Selection -->
+    <div class="mb-4 w-full max-w-md md:max-w-3xl">
+        <label for="projectSelect" class="block text-sm font-medium text-text-muted mb-2">Select Project:</label>
+        <select id="projectSelect" class="w-full p-3 bg-bg-secondary rounded-lg border border-border-primary text-white focus:outline-none focus:ring-2 focus:ring-primary">
+            <option value="novas">Novastro</option>
+            <option value="bitcoin">Bitcoin</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="solana">Solana</option>
+            <option value="base">Base</option>
+            <option value="polygon">Polygon</option>
+            <option value="arbitrum">Arbitrum</option>
+            <option value="optimism">Optimism</option>
+            <option value="cardano">Cardano</option>
+            <option value="chainlink">Chainlink</option>
+            <option value="avalanche">Avalanche</option>
+            <option value="polkadot">Polkadot</option>
+            <option value="cosmos">Cosmos</option>
+            <option value="near">NEAR Protocol</option>
+            <option value="algorand">Algorand</option>
+        </select>
     </div>
-    <div class="error-message" id="errorMessage" style="display: none;">
-        <span id="errorText"></span>
-        <button id="errorCloseBtn">×</button>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-4 w-full max-w-md md:max-w-3xl">
+        <input type="text" id="usernameInput" placeholder="Enter X username" 
+               class="flex-1 p-3 bg-bg-secondary rounded-lg border border-border-primary text-white placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary">
+        <button id="searchBtn" class="px-6 py-3 bg-primary hover:bg-primary-hover rounded-lg text-white font-medium transition-colors duration-200">
+            Search
+        </button>
     </div>
-    <div class="visitor-counter">
-        <p>Visitors: <span id="visitorCount">0</span></p>
+    
+    <div id="errorMessage" class="hidden bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4 w-full max-w-md md:max-w-3xl relative">
+        <span id="errorText" class="text-red-400 text-sm"></span>
+        <button id="errorCloseBtn" class="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xl leading-none">×</button>
     </div>
-    <div class="result-card" id="resultCard" style="display: none;">
-        <div class="result-card-inner">
-            <div class="user-info">
-                <img id="userAvatar" src="" alt="User Avatar">
+    
+    <div class="mb-4 text-center">
+        <div class="inline-block bg-glass border border-glass-border rounded-lg p-3">
+            <p class="text-sm text-text-muted">Visitors: <span id="visitorCount" class="text-white">0</span></p>
+        </div>
+    </div>
+    <div id="resultCard" class="hidden bg-glass border border-glass-border backdrop-blur-sm rounded-xl p-6 w-full max-w-md md:max-w-3xl shadow-2xl shadow-primary/10 animate-fade-in">
+        <div class="flex flex-col gap-6">
+            <div class="flex items-center gap-4">
+                <img id="userAvatar" src="" alt="User Avatar" class="w-16 h-16 rounded-full border-2 border-primary">
                 <div>
-                    <h2 id="displayName"></h2>
-                    <p id="handle"></p>
+                    <h2 id="displayName" class="text-xl font-semibold"></h2>
+                    <p id="handle" class="text-text-muted text-sm"></p>
                 </div>
             </div>
+            
             <div>
-                <div class="stats-label">Yaps</div>
-                <div class="yaps-section">
-                    <div class="stat-block">
-                        <p>Total Yaps</p>
-                        <span id="totalYaps">-</span>
+                <div class="font-bold text-lg mb-3">Yaps</div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Total Yaps</p>
+                        <span id="totalYaps" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>Last 24 hrs</p>
-                        <span id="last24h">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Last 24 hrs</p>
+                        <span id="last24h" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>Last 7 Days</p>
-                        <span id="last7d">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Last 7 Days</p>
+                        <span id="last7d" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>Last 30 Days</p>
-                        <span id="last30d">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Last 30 Days</p>
+                        <span id="last30d" class="text-lg font-bold">-</span>
                     </div>
                 </div>
             </div>
+            
             <div>
-                <div class="stats-label">Leaderboard Positions</div>
-                <div class="leaderboard-section">
-                    <div class="stat-block">
-                        <p>7D Rank</p>
-                        <span id="rank7d">-</span>
+                <div class="font-bold text-lg mb-3">Leaderboard Positions</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">7D Rank</p>
+                        <span id="rank7d" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>30D Rank</p>
-                        <span id="rank30d">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">30D Rank</p>
+                        <span id="rank30d" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>3M Rank</p>
-                        <span id="rank3m">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">3M Rank</p>
+                        <span id="rank3m" class="text-lg font-bold">-</span>
                     </div>
                 </div>
             </div>
-            <div class="buttons">
-                <button id="shareBtn">Share</button>
-                <button id="generateBtn">Generate Card</button>
+            
+            <div class="flex gap-3 mt-4">
+                <button id="shareBtn" class="flex-1 px-6 py-3 bg-primary hover:bg-primary-hover rounded-lg text-white font-medium transition-colors duration-200">
+                    Share
+                </button>
+                <button id="generateBtn" class="flex-1 px-6 py-3 bg-primary hover:bg-primary-hover rounded-lg text-white font-medium transition-colors duration-200">
+                    Generate Card
+                </button>
             </div>
         </div>
     </div>
-    <div class="generated-card" id="generatedCard">
-        <div class="generated-card-inner">
-            <div class="user-info">
-                <img id="generatedAvatar" src="" alt="User Avatar">
+    
+    <!-- Generated Card (Hidden for screenshot) -->
+    <div id="generatedCard" class="absolute -left-[9999px] invisible bg-bg-primary border border-glass-border rounded-none p-6 w-[600px] h-[575px] shadow-2xl shadow-primary/10">
+        <div class="flex flex-col gap-4 h-full min-h-[525px]">
+            <div class="flex items-center gap-4">
+                <img id="generatedAvatar" src="" alt="User Avatar" class="w-16 h-16 rounded-full border-2 border-primary">
                 <div>
-                    <h2 id="generatedDisplayName"></h2>
-                    <p id="generatedHandle"></p>
+                    <h2 id="generatedDisplayName" class="text-xl font-semibold"></h2>
+                    <p id="generatedHandle" class="text-text-muted text-sm"></p>
                 </div>
             </div>
+            
             <div>
-                <div class="stats-label">Yaps</div>
-                <div class="yaps-section">
-                    <div class="stat-block">
-                        <p>Total Yaps</p>
-                        <span id="generatedTotalYaps">-</span>
+                <div class="font-bold text-lg mb-3">Yaps</div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Total Yaps</p>
+                        <span id="generatedTotalYaps" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>Last 24 hrs</p>
-                        <span id="generatedLast24h">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Last 24 hrs</p>
+                        <span id="generatedLast24h" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>Last 7 Days</p>
-                        <span id="generatedLast7d">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Last 7 Days</p>
+                        <span id="generatedLast7d" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>Last 30 Days</p>
-                        <span id="generatedLast30d">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">Last 30 Days</p>
+                        <span id="generatedLast30d" class="text-lg font-bold">-</span>
                     </div>
                 </div>
             </div>
+            
             <div>
-                <div class="stats-label">Leaderboard Positions</div>
-                <div class="leaderboard-section">
-                    <div class="stat-block">
-                        <p>7D Rank</p>
-                        <span id="generatedRank7d">-</span>
+                <div class="font-bold text-lg mb-3">Leaderboard Positions</div>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">7D Rank</p>
+                        <span id="generatedRank7d" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>30D Rank</p>
-                        <span id="generatedRank30d">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">30D Rank</p>
+                        <span id="generatedRank30d" class="text-lg font-bold">-</span>
                     </div>
-                    <div class="stat-block">
-                        <p>3M Rank</p>
-                        <span id="generatedRank3m">-</span>
+                    <div class="bg-glass border border-glass-border rounded-lg p-4 text-center">
+                        <p class="text-sm text-text-muted mb-1">3M Rank</p>
+                        <span id="generatedRank3m" class="text-lg font-bold">-</span>
                     </div>
                 </div>
             </div>
-            <div class="watermark">Made by @xtopher0x</div>
+            
+            <div class="absolute bottom-4 right-4 text-xs text-text-muted">
+                Made by @xtopher0x
+            </div>
         </div>
     </div>
-    <div class="loader" id="loader" style="display: none;"></div> <br><br>
-    <footer class="watermark">
-        <a href="https://x.com/xtopher0x" target="_blank">Made by @Xtopher0x</a>
+    
+    <!-- Loader -->
+    <div id="loader" class="hidden fixed inset-0 bg-bg-primary/80 z-50 flex items-center justify-center">
+        <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+    
+    <footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-center p-2">
+        <a href="https://x.com/xtopher0x" target="_blank" class="text-text-muted hover:text-white transition-colors text-sm">
+            Made with love by @Xtopher0x
+        </a>
     </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
