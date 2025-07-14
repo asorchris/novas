@@ -234,7 +234,7 @@ class UIController {
         const generatedElements = ['generatedTotalYaps', 'generatedLast24h', 'generatedLast7d', 'generatedLast30d'];
         
         elements.forEach((elementId, index) => {
-            const value = yapsData ? Utils.formatNumber(yapsData[`yaps_${elementId.replace('total', 'all').replace(/last(\d+)([hd])/, 'l$1$2')}`]) : '-';
+            const value = yapsData ? Utils.formatNumber(yapsData[`yaps_${elementId.replace('totalYaps', 'all').replace(/last(\d+)([hd])/, 'l$1$2')}`]) : '-';
             Utils.getElement(elementId).textContent = value;
             Utils.getElement(generatedElements[index]).textContent = value;
         });
