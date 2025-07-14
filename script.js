@@ -267,7 +267,7 @@ class UIController {
         const elements = ['totalYaps', 'last24h', 'last7d', 'last30d', 'last6m', 'last12m'];
         const generatedElements = ['generatedTotalYaps', 'generatedLast24h', 'generatedLast7d', 'generatedLast30d', 'generatedLast6m', 'generatedLast12m'];
 
-        console.log("Updating Yaps data:", elements, yapsData);
+        // console.log("Updating Yaps data:", elements, yapsData);
         elements.forEach((elementId, index) => {
             // Map elementId to yapsData key
             let key;
@@ -303,6 +303,8 @@ class UIController {
             '6m': findUserRank(leaderboardData['6m']),
             '12m': findUserRank(leaderboardData['12m'])
         };
+
+        console.log("Updating leaderboard data:", ranks);
 
         // Update main result card
         Utils.getElement('rank7d').textContent = ranks['7d'];
