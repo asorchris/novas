@@ -7,9 +7,9 @@
     "start": "npx serve .",
     "dev": "npx live-server .",
     "build": "npm run build:prepare && npm run build:copy",
-    "build:prepare": "mkdir -p dist",
+    "build:prepare": "mkdir -p public",
     "build:copy": "cp -r *.html *.js *.md img public/",
-    "build:serve": "npx serve dist",
+    "build:serve": "npx serve public",
     "test": "echo 'No tests configured'"
   },
   "keywords": ["yaps", "leaderboard", "crypto", "social", "novastro"],
