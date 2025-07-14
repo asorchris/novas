@@ -267,6 +267,7 @@ class UIController {
         const elements = ['totalYaps', 'last24h', 'last7d', 'last30d', 'last6m', 'last12m'];
         const generatedElements = ['generatedTotalYaps', 'generatedLast24h', 'generatedLast7d', 'generatedLast30d', 'generatedLast6m', 'generatedLast12m'];
 
+        console.log("Updating Yaps data:", elements, yapsData);
         elements.forEach((elementId, index) => {
             // Map elementId to yapsData key
             let key;
@@ -279,8 +280,10 @@ class UIController {
                 key = elementId;
             }
             const value = yapsData ? Utils.formatNumber(yapsData[key]) : '-';
-            Utils.getElement(elementId).textContent = value;
-            Utils.getElement(generatedElements[index]).textContent = value;
+            const el = Utils.getElement(elementId);
+            if (el) el?.textContent = value;
+            const genEl = Utils.getElement(generatedElements[index]);
+            if (genEl) genEl?.textContent = value;
         });
     }
 
